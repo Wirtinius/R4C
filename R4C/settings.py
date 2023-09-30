@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'customers',
     'orders',
-    'robots'
+    'robots',
 ]
 
 MIDDLEWARE = [
@@ -111,3 +111,23 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Celery settings
+CELERY_BROKER_URL = "redis://127.0.0.1:6379"
+CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379"
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Kolkata'
+
+
+from celery.schedules import crontab
+from datetime import datetime
+
+CELERY_BEAT_SCHEDULE = { # scheduler configuration
+    'Task_one_schedule' : {  # whatever the name you want
+        'task': 'orders.tasks.notify_customer_on_robot_availability', # name of task with path
+        'schedule': 30, # 30 runs this task every 30 seconds
+        # 'args' : {datetime.now()} # arguments for the task
+    },
+}
