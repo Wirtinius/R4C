@@ -124,10 +124,9 @@ CELERY_TIMEZONE = 'Asia/Kolkata'
 from celery.schedules import crontab
 from datetime import datetime
 
-CELERY_BEAT_SCHEDULE = { # scheduler configuration
-    'Task_one_schedule' : {  # whatever the name you want
-        'task': 'orders.tasks.notify_customer_on_robot_availability', # name of task with path
-        'schedule': 30, # 30 runs this task every 30 seconds
-        # 'args' : {datetime.now()} # arguments for the task
+CELERY_BEAT_SCHEDULE = { 
+    'Task_one_schedule' : { 
+        'task': 'orders.tasks.notify_customer_on_robot_availability', 
+        'schedule': 30, 
     },
 }
